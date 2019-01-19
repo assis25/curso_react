@@ -4,12 +4,15 @@ import Todo from './todo';
 
 class TodoList extends Component{
     render(){
+        const todosToRender = this.props.todoList.map(function(todo){
+            return <Todo text={todo.text} />
+        })
         return (
             <View>
-                {this.props.todoList.map((todo) => (
-                    <Todo text={todo.text} />    
-                ))}
+                {todosToRender}
             </View>
         )
     }
 }
+
+export default TodoList;

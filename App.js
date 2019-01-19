@@ -8,19 +8,29 @@
 
 import React, {Component} from 'react';
 import { StyleSheet, View} from 'react-native';
-
+import TodoList from './components/todo-list';
 
 
 export default class App extends Component{
   constructor(){
     super();
+    const todo1 = {
+      text: 'Primeiro item da lista:',
+    };
+    const todo2 = {
+      text: 'Segundo item da lista:',
+    };
+    const todo3 = {
+      text: 'Terceiro item da lista:',
+    };
     this.state = {
-      todos: [],
+      todos: [todo1, todo2, todo3],
     }
   }
   render() {
     return (
       <View style={styles.container}>
+        <TodoList todoList={this.state.todos} />
       </View>
     );
   }
