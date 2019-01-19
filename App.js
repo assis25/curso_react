@@ -7,41 +7,20 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, View} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-class Hello extends Component{
- 
-  render(){
-    return (
-    <Text style={styles.welcome}>
-      Bem vindo(a), {this.props.name}!
-    </Text>
-    )
-  }
-}
 
 
 export default class App extends Component{
   constructor(){
     super();
     this.state = {
-      name: 'Assis',
+      todos: [],
     }
   }
   render() {
     return (
       <View style={styles.container}>
-        <Hello name={this.state.name}/>
-        <Text style={styles.welcome}>Welcome to MyApp!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
       </View>
     );
   }
