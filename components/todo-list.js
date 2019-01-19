@@ -9,6 +9,7 @@ class TodoList extends Component{
         })
         return (
             <View>
+                
                 {todosToRender}
             </View>
         )

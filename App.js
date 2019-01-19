@@ -9,6 +9,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, View} from 'react-native';
 import TodoList from './components/todo-list';
+import AddTodo from './components/add-todo';
 
 
 export default class App extends Component{
@@ -27,9 +28,15 @@ export default class App extends Component{
       todos: [todo1, todo2, todo3],
     }
   }
+  addTodo(text){
+    this.setState({
+      todos: this.state.todos.concat([{ text: text }])
+    })
+  }
   render() {
     return (
       <View style={styles.container}>
+        <AddTodo add={text => this.addTodo(text) } />
         <TodoList todoList={this.state.todos} />
       </View>
     );
@@ -39,8 +46,8 @@ export default class App extends Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
   welcome: {
