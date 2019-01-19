@@ -41,15 +41,21 @@ class AddTodo extends Component{
 }
 const styles = StyleSheet.create({
   container:{
+    alignItems: 'center',
     width: '100%',
     padding: 15,
     backgroundColor: 'lightgray',
     flexDirection: 'row'
   },
   input: {
-    flex: 1
+    flex: 1,
+    padding: 5,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    marginRight: 10
   },
   button: {
+    marginLeft: 10,
     flexShrink: 0
   }
 })
