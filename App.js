@@ -1,13 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import { StyleSheet, ScrollView, View, Text} from 'react-native';
+import { StyleSheet, ScrollView, View, Text, PermissionsAndroid} from 'react-native';
 import TodoList from './components/todo-list';
 import AddTodo from './components/add-todo';
 import { createStackNavigator, createAppContainer } from "react-navigation";
@@ -28,10 +20,12 @@ class TodoDetails extends Component{
     title: 'Todo'
   }
   render(){
+    const todo = this.props.navigation.getParam('todo');
+    console.warn(todo);
     return (
       <View>
         <Text>
-          {this.props.navigation.getParam('text')}
+          {todo.text}
         </Text>
       </View>
     )
@@ -41,8 +35,6 @@ class Home extends Component{
   static navigationOptions ={
     ...defaultNavigationOptions,
     title: 'Todo App',
-
-
   };
   constructor(props){
     super(props);
@@ -55,22 +47,62 @@ class Home extends Component{
     // }, 3000);
     
     const todo1 = {
+      id: 1,
       text: 'Primeiro item da lista:',
     };
     const todo2 = {
+      id: 2,
       text: 'Segundo item da lista:',
     };
     const todo3 = {
+      id: 3,
       text: 'Terceiro item da lista:',
     };
     this.state = {
+      idCount: 3,
       todos: [todo1, todo2, todo3],
     }
+    this.resquestMapsPermission();
   }
-  addTodo(text){
+  async resquestMapsPermission(){
+    try{
+      const isGranted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': "Todo app location access",
+          'message': 'We need your location to know where you'
+        }
+      )
+      this.setState({
+        geolocationPermissionGranted: isGranted,
+      })
+    }catch(err){
+      return;
+    }
+  }
+
+  setTodoLocation(id, coords) {
+    const { latitude, longitude } = coords;
+    const { todos } = this.state;
+    todos
+      .find(todo => todo.id === id)
+      .location = coords;
     this.setState({
-      todos: [{ text: text }].concat(this.state.todos)
-    })
+      todos: todos
+    });
+  }
+
+  addTodo(text){
+    const id = this.state.idCount + 1;
+    this.setState({
+      todos: [{ id: id, text: text }].concat(this.state.todos),
+      idCount: id
+    });
+    if(this.state.geolocationPermissionGranted){
+      navigator.geolocation.getCurrentPosition((pos) => {
+        this.setTodoLocation(id, pos.coords)
+      }, null, {enableHighAccuracy: true})
+    }
   }
   render() {
     return (

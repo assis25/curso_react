@@ -4,11 +4,12 @@ import Todo from './todo';
 
 class TodoList extends Component{
     render(){
-        const todosToRender = this.props.todoList.map((todo) =>{
+        const todosToRender = 
+        this.props.todoList.map((todo) =>{
             return( 
               <Todo 
                 navigation={this.props.navigation}
-                text={todo.text} 
+                todo={todo} 
               />
             );
         })
