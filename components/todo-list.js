@@ -5,7 +5,12 @@ import Todo from './todo';
 class TodoList extends Component{
     render(){
         const todosToRender = this.props.todoList.map(function(todo){
-            return <Todo text={todo.text} />
+            return( 
+              <Todo 
+                navigation={this.props.navigation}
+                text={todo.text} 
+              />
+            );
         })
         return (
             <View style={styles.container}>

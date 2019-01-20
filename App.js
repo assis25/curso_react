@@ -16,7 +16,7 @@ const defaultNavigationOptions = {
   headerStyle: {
     backgroundColor: '#1e88e5'
   },
-  headerTintColor: '#1e88e5',
+  headerTintColor: 'white',
   headerTitleStyle:{
     fontWeight: 'bold',
     color: 'white'
@@ -30,7 +30,9 @@ class TodoDetails extends Component{
   render(){
     return (
       <View>
-        <Text>Mudei de Página</Text>
+        <Text>
+          {this.props.navigation.getParam('text')}
+        </Text>
       </View>
     )
   }
@@ -45,9 +47,12 @@ class Home extends Component{
   constructor(props){
     super(props);
 
-    setTimeout(() =>{
-      this.props.navigation.navigate('TodoDetails');
-    }, 3000);
+    // setTimeout(() =>{
+    //   this.props.navigation.navigate('TodoDetails',
+    //   {
+    //     text: 'E aí galera!'
+    //   });
+    // }, 3000);
     
     const todo1 = {
       text: 'Primeiro item da lista:',
@@ -73,7 +78,10 @@ class Home extends Component{
         
         <ScrollView>
           <AddTodo add={text => this.addTodo(text) } />
-          <TodoList todoList={this.state.todos} />
+          <TodoList 
+            todoList={this.state.todos} 
+            navigation={this.props.navigation}
+            />
         </ScrollView>
       </View>
     );
