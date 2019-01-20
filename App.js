@@ -89,9 +89,9 @@ class Home extends Component{
       );
       //console.error(response.json());
       const data = await response.json();
-      if(data.results.formatted_address){
+      if(data.results[0].formatted_address){
         
-        const address = data.results.formatted_address;
+        const address = data.results[0].formatted_address;
   
         const { todos } = this.state;
         todos
