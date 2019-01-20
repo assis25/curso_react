@@ -7,14 +7,48 @@
  */
 
 import React, {Component} from 'react';
-import { StyleSheet, ScrollView, View} from 'react-native';
+import { StyleSheet, ScrollView, View, Text} from 'react-native';
 import TodoList from './components/todo-list';
 import AddTodo from './components/add-todo';
+import { createStackNavigator, createAppContainer } from "react-navigation";
+
+const defaultNavigationOptions = {
+  headerStyle: {
+    backgroundColor: '#1e88e5'
+  },
+  headerTintColor: '#1e88e5',
+  headerTitleStyle:{
+    fontWeight: 'bold',
+    color: 'white'
+  }
+}
+class TodoDetails extends Component{
+  static navigationOptions = {
+    ...defaultNavigationOptions,
+    title: 'Todo'
+  }
+  render(){
+    return (
+      <View>
+        <Text>Mudei de Página</Text>
+      </View>
+    )
+  }
+}
+class Home extends Component{
+  static navigationOptions ={
+    ...defaultNavigationOptions,
+    title: 'Todo App',
 
 
-export default class App extends Component{
-  constructor(){
-    super();
+  };
+  constructor(props){
+    super(props);
+
+    setTimeout(() =>{
+      this.props.navigation.navigate('TodoDetails');
+    }, 3000);
+    
     const todo1 = {
       text: 'Primeiro item da lista:',
     };
@@ -36,9 +70,9 @@ export default class App extends Component{
   render() {
     return (
       <View style={styles.container}>
-        <AddTodo add={text => this.addTodo(text) } />
+        
         <ScrollView>
-          
+          <AddTodo add={text => this.addTodo(text) } />
           <TodoList todoList={this.state.todos} />
         </ScrollView>
       </View>
@@ -67,3 +101,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+const AppNavigator = createStackNavigator({
+  Home: {screen: Home},
+  TodoDetails: {screen: TodoDetails}
+});
+export default createAppContainer(AppNavigator);
