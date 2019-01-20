@@ -29,7 +29,9 @@ class AddTodo extends Component{
         onChangeText={text => this.onTextInput(text)}
       />
       <Button 
+        disabled={!this.state.text}
         style={styles.button}
+        color={'#0000FF'}
         onPress={
           ()=> this.addTodo()
         }
