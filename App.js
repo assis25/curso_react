@@ -21,7 +21,7 @@ class TodoDetails extends Component{
   }
   render(){
     const todo = this.props.navigation.getParam('todo');
-    console.warn(todo);
+    //console.warn(todo);
     return (
       <View>
         <Text>
@@ -74,22 +74,39 @@ class Home extends Component{
         }
       )
       this.setState({
-        geolocationPermissionGranted: isGranted,
+        geolocationPermissionGranted: isGranted === 'granted',
       })
     }catch(err){
-      return;
+      console.error(err);
     }
   }
 
-  setTodoLocation(id, coords) {
+  async setTodoLocation(id, coords) {
     const { latitude, longitude } = coords;
-    const { todos } = this.state;
-    todos
-      .find(todo => todo.id === id)
-      .location = coords;
-    this.setState({
-      todos: todos
-    });
+    try{
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${1000}`
+      );
+      //console.error(response.json());
+      const data = await response.json();
+      if(data.results.formatted_address){
+        
+        const address = data.results.formatted_address;
+  
+        const { todos } = this.state;
+        todos
+          .find(todo => todo.id === id)
+          .location = address;
+        this.setState({
+          todos
+        })
+      }else{
+        throw JSON.stringify(data);
+      }
+
+    }catch(e){
+      console.error(e);
+    }
   }
 
   addTodo(text){

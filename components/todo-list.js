@@ -8,14 +8,14 @@ class TodoList extends Component{
         this.props.todoList.map((todo) =>{
             return( 
               <Todo 
+                key={todo.id}
                 navigation={this.props.navigation}
                 todo={todo} 
               />
             );
         })
         return (
-            <View style={styles.container}>
-                
+            <View style={styles.container}>                
                 {todosToRender}
             </View>
         )

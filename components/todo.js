@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
 
 class Todo extends Component{
     render(){
-        console.warn(this.props.todo);
+        //console.warn(this.props.todo);
         return(
             <TouchableNativeFeedback
                 onPress={() =>{
